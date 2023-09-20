@@ -18,5 +18,5 @@
 ### ✅ Styled-Components
 ### ✅ React-router-dom
 
-### atom
-### selector
+### ✅ atom (동기)
+### ✅ selector (비동기)
