@@ -1,31 +1,14 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import Todo from "../components/Todo";
+import CreateTodo from "../components/CreateTodo";
+import { useRecoilValue } from "recoil";
+import { todoState } from "../atom";
 
 const TodoList = () => {
-  //유효성 검사
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const [toDo, setToDo] = useState("");
-
-  const onChangeTodoList = (e: React.FormEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = e;
-    setToDo(value);
-  };
-
-  const onSubmit = (data: any) => {
-    console.log(toDo);
-  };
+  const toDoList = useRecoilValue(todoState);
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
+      <h1
         style={{
           display: "flex",
           flexDirection: "column",
@@ -33,13 +16,14 @@ const TodoList = () => {
           marginTop: "10px",
         }}
       >
-        <input
-          value={toDo}
-          placeholder="오늘 할 일"
-          onChange={onChangeTodoList}
-        />
-        <button type="submit">등록</button>
-      </form>
+        Todo List
+      </h1>
+      <CreateTodo />
+      <ul>
+        {toDoList.map((list) => (
+          <Todo key={list.id} {...list} />
+        ))}
+      </ul>
     </div>
   );
 };
