@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 /**
  * @Date 23.09.23.
  * @autor Kimdowon
@@ -32,4 +32,24 @@ export interface ITodo {
 export const todoState = atom<ITodo[]>({
   key: "todoState",
   default: [],
+});
+
+export const categoryState = atom({
+  key: "category",
+  default: "TODO",
+});
+
+// Recoil Selector
+export const todoSelector = selector({
+  key: "todoSelector",
+  get: ({ get }) => {
+    const todoList = get(todoState);
+    const category = get(categoryState);
+    if (category === "TODO")
+      return todoList.filter((todo) => todo.category === "TODO");
+    if (category === "DOING")
+      return todoList.filter((todo) => todo.category === "DOING");
+    if (category === "DONE")
+      return todoList.filter((todo) => todo.category === "DONE");
+  },
 });
